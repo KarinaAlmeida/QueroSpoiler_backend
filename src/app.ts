@@ -1,6 +1,12 @@
 import express, { Express } from "express";
 import cors from "cors";
 
+import { handleApplicationErrors } from '@/middlewares';
+
+import {
+  userRouter
+} from '@/routers';
+
 import { loadEnv, connectDb, disconnectDB } from "@/config";
 loadEnv();
 
@@ -8,7 +14,8 @@ const app = express();
 app
   .use(cors())
   .use(express.json())
-  
+  .use('/', userRouter)
+  .use(handleApplicationErrors);
 
   
 
