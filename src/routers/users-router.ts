@@ -6,8 +6,8 @@ import {signUp, signIn} from '@/controller';
 
 const userRouter = Router();
 
+userRouter.post("/", validateSchema(signin), signIn)
 userRouter.post('/signup', validateSchema(signup), signUp )
-userRouter.post("/signin", validateSchema(signin), signIn)
 
 
 
