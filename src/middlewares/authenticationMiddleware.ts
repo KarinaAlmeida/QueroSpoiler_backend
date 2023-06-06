@@ -22,7 +22,7 @@ export async function authenticateToken( req: AuthenticatedRequest, res: Respons
 
     return next();
   } catch (err) {
-    throw unauthorizedError();
+   next(err);
   }
 }
 
