@@ -1,1 +1,2 @@
-export * from './users-services';
+export * from './user-services';
+export * from './post-services';

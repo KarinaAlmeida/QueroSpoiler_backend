@@ -1,4 +1,3 @@
-import { Url } from "url";
 
 export type ApplicationError = {
     name: string;
@@ -14,4 +13,12 @@ export type ApplicationError = {
   export type SignIn = {
     email: string;
     password: string;
+  }
+
+  export type Summary ={
+    title: string;
+    author: string;
+    coverUrl: string;
+    summary: string;
+    user_id: number;
   }

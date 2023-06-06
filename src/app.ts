@@ -4,6 +4,7 @@ import cors from "cors";
 import { handleApplicationErrors } from '@/middlewares';
 
 import {
+  postRouter,
   userRouter
 } from '@/routers';
 
@@ -15,6 +16,7 @@ app
   .use(cors())
   .use(express.json())
   .use('/', userRouter)
+  .use('/post', postRouter)
   .use(handleApplicationErrors);
 
   

@@ -3,7 +3,7 @@ import httpStatus from "http-status";
 import { ApplicationError } from '@/protocols';
 
 export function handleApplicationErrors(err: ApplicationError | Error, req: Request, res: Response, next: NextFunction) {
-  if (err.name === 'ConflictError' || err.name === 'DuplicatedEmailError') {
+  if (err.name === 'ConflictError' || err.name === 'DuplicatedEmailError' || err.name === 'DuplicatedSummaryError') {
     return res.status(httpStatus.CONFLICT).send({
       message: err.message,
     });

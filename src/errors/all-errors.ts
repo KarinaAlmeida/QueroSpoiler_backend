@@ -13,6 +13,14 @@ export function conflictError(message: string[]) {
     };
   }
 
+  export function duplicatedSummaryError(title: string) {
+    return {
+      name: "DuplicatedSummaryError",
+      message: "There's already a summary for this book!",
+      title,
+    };
+  }
+
  export function unauthorizedError() {
     return {
       name: "UnauthorizedError",

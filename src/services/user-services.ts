@@ -30,4 +30,4 @@ export async function signup({ name, email, password, picture }:SignUp) {
     const token = jwt.sign({ user_id: user.id }, process.env.JWT_SECRET);
   
     return token;
-  }
+  } 
