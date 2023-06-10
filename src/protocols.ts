@@ -1,3 +1,4 @@
+import { boolean } from "joi";
 
 export type ApplicationError = {
     name: string;
@@ -20,5 +21,10 @@ export type ApplicationError = {
     author: string;
     coverUrl: string;
     summary: string;
-    user_id: number;
+    user_id?: number;
+  }
+
+  export type Search ={
+    title?:string;
+    author?:string;
   }
