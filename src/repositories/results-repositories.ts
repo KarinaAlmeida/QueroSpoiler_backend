@@ -25,7 +25,7 @@ export async function getPostsByAuthorAndTitle (title: string, author: string) {
       });
       const limitedPosts = posts.map(post => ({
         ...post,
-        summary: post.summary.length > 100 ? post.summary.substring(0, 100) + '...' : post.summary,
+        summary: post.summary.length > 200 ? post.summary.substring(0, 200) + '...' : post.summary,
       }));
       return limitedPosts;
 }
@@ -49,7 +49,7 @@ export async function getPostsByAuthor(author: string) {
       });
       const limitedPosts = posts.map(post => ({
         ...post,
-        summary: post.summary.length > 100 ? post.summary.substring(0, 100) + '...' : post.summary,
+        summary: post.summary.length > 200 ? post.summary.substring(0, 200) + '...' : post.summary,
       }));
       return limitedPosts;
     }
@@ -72,7 +72,7 @@ export async function getPostsByTitle (title: string) {
       });
       const limitedPosts = posts.map(post => ({
         ...post,
-        summary: post.summary.length > 100 ? post.summary.substring(0, 100) + '...' : post.summary,
+        summary: post.summary.length > 200 ? post.summary.substring(0, 200) + '...' : post.summary,
       }));
       return limitedPosts;
     }

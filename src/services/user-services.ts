@@ -26,8 +26,9 @@ export async function signup({ name, email, password, picture }:SignUp) {
   
     const correctPassword = await bcrypt.compare(password, user.password);
     if (!correctPassword) throw invalidCredentialsError();
-  
+
+    const pic = user.picture
     const token = jwt.sign({ user_id: user.id }, process.env.JWT_SECRET);
   
-    return token;
-  } 
+    return {token, pic};
+  }  

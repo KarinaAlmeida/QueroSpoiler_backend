@@ -15,8 +15,8 @@ export async function signUp (req: Request, res: Response, next: NextFunction) {
 export async function signIn(req: Request, res: Response, next: NextFunction) {
   const { email, password } = req.body;
   try {
-    const token = await signin({ email, password });
-    return res.send({ token });
+    const user = await signin({ email, password });
+    return res.send({ user });
 
   } catch (err) {
     next(err);

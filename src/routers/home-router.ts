@@ -4,7 +4,6 @@ import { getRecent } from '@/controller';
 
 const homeRouter = Router();
 homeRouter
-// .all('/*', authenticateToken)
 .get("/", getRecent)
 
 export {homeRouter};

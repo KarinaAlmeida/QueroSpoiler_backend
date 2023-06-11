@@ -20,7 +20,7 @@ export async function getPosts(): Promise<Summary[]> {
 
     const limitedPosts = posts.map(post => ({
         ...post,
-        summary: post.summary.length > 100 ? post.summary.substring(0, 100) + '...' : post.summary
+        summary: post.summary.length > 200 ? post.summary.substring(0, 200) + '...' : post.summary
       }));
       
       return limitedPosts;
