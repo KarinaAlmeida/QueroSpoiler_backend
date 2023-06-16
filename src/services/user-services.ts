@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
-import {duplicatedEmailError,invalidCredentialsError } from '@/errors';
+import {duplicatedEmailError,invalidCredentialsError, notFoundError } from '@/errors';
 import jwt from "jsonwebtoken";
 import "dotenv/config";
-import {SignUp, SignIn } from '@/protocols';
-import {findByEmail, signUp } from '@/repositories';
+import {SignUp, SignIn, Summary } from '@/protocols';
+import {findByEmail, getPostsByUserId, signUp } from '@/repositories';
 
 
 export async function validateEmail(email: string) {
@@ -32,3 +32,9 @@ export async function signup({ name, email, password, picture }:SignUp) {
   
     return {token, pic};
   }  
+
+  export async function userPost(user_id: number): Promise<Summary[]> {
+    const posts = await getPostsByUserId(user_id);
+    if (!posts || posts.length === 0) throw notFoundError();
+    return posts;
+  }

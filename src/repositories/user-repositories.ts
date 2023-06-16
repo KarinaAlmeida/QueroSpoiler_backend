@@ -1,5 +1,5 @@
 import { prisma } from '@/config';
-import { SignUp } from '@/protocols';
+import { SignUp, Summary } from '@/protocols';
 
 export async function findByEmail (email:string) {
     return prisma.user.findFirst({
@@ -19,11 +19,23 @@ export async function signUp ({ name, email, password, picture }:SignUp) {
       });
 }
 
-// export async function findById(id:number) {
-//     return prisma.user.findUnique({
-//       where: {
-//         id: id,
-//       },
-//     });
-//   }
-
+export async function getPostsByUserId(user_id: number): Promise<Summary[]> {
+  const posts = await prisma.post.findMany({
+    where: {
+      userId: user_id,
+    },
+    select: {
+      id: true,
+      title: true,
+      author: true,
+      coverUrl: true,
+      summary: true
+    },
+  });
+  const limitedPosts = posts.map(post => ({
+    ...post,
+    summary: post.summary.length > 200 ? post.summary.substring(0, 200) + '...' : post.summary
+  }));
+  
+  return limitedPosts;
+} 
