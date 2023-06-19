@@ -13,3 +13,6 @@ export const signin= joi.object({
     password: joi.string().required(),
   });
 
+  export const update = joi.object({
+    picture: joi.string().uri().required(),
+  })

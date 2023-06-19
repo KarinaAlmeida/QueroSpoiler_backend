@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {authenticateToken, validateSchema} from '@/middlewares';
-import {signup, signin} from '@/schemas';
-import {signUp, signIn, getUserPost} from '@/controller';
+import {signup, signin, update} from '@/schemas';
+import {signUp, signIn, getUserPost, deleteUserPost, updateUserPic} from '@/controller';
 
 
 const userRouter = Router();
@@ -11,8 +11,8 @@ userRouter
 .post('/signup', validateSchema(signup), signUp )
 .all('/user*', authenticateToken)
 .get("/user", getUserPost)
-// .put("/user")
-// .delete("/user")
+.delete("/user/:postId", deleteUserPost)
+.put("/user", validateSchema(update), updateUserPic)
 
 
 

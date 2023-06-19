@@ -39,3 +39,31 @@ export async function getPostsByUserId(user_id: number): Promise<Summary[]> {
   
   return limitedPosts;
 } 
+
+export async function findPostById(postId: number) {
+  const post= await prisma.post.findUnique({
+    where: {
+      id:postId
+    }
+  })
+  return post
+}
+
+export async function deletePostById (postId: number) {
+  await prisma.post.delete({
+    where:{
+      id: postId
+    }
+  })
+}
+
+export async function updatePic (user_id: number, picture: string) {
+  const pic = await prisma.user.update({
+   where:{
+    id: user_id
+   },
+   data: {
+    picture: picture
+   }
+  })
+}

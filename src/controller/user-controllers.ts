@@ -1,7 +1,8 @@
-import {signup, signin, userPost } from '@/services';
-import httpStatus from 'http-status';
+import {signup, signin, userPost, deletePost, userPic } from '@/services';
+import httpStatus, { BAD_REQUEST } from 'http-status';
 import { NextFunction, Request, Response } from "express";
 import { AuthenticatedRequest } from '@/middlewares';
+import { notFoundError } from '@/errors';
 
 export async function signUp (req: Request, res: Response, next: NextFunction) {
   const { name, email, password, picture } = req.body;
@@ -34,4 +35,33 @@ export async function getUserPost(req: AuthenticatedRequest, res: Response, next
     console.log(error);
     next(error);
   }
+}
+
+export async function deleteUserPost (req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  try {
+    const postId = parseInt(req.params.postId);
+    if(isNaN(postId) || postId <=0 || !postId) return res.sendStatus(httpStatus.BAD_REQUEST)
+    await deletePost(postId)
+    return res.sendStatus(httpStatus.OK)
+
+  }catch(error) {
+    console.log(error);
+    next(error);
+  }
+}
+
+export async function updateUserPic (req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  try {
+    const { user_id } = req;
+    const {picture} = req.body;
+    if (!user_id) throw notFoundError();
+
+    const pic= await userPic(user_id, picture);
+    return res.status(httpStatus.OK).send(pic)
+
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+  
 }

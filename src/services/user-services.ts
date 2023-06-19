@@ -3,7 +3,7 @@ import {duplicatedEmailError,invalidCredentialsError, notFoundError } from '@/er
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import {SignUp, SignIn, Summary } from '@/protocols';
-import {findByEmail, getPostsByUserId, signUp } from '@/repositories';
+import {deletePostById, findByEmail, findPostById, getPostById, getPostsByUserId, signUp, updatePic } from '@/repositories';
 
 
 export async function validateEmail(email: string) {
@@ -37,4 +37,17 @@ export async function signup({ name, email, password, picture }:SignUp) {
     const posts = await getPostsByUserId(user_id);
     if (!posts || posts.length === 0) throw notFoundError();
     return posts;
+  }
+
+  export async function deletePost(postId:number) {
+    const postExists = await findPostById (postId);
+    if(!postExists) throw notFoundError();
+
+    await deletePostById (postId);
+  }
+  
+  export async function userPic (user_id:number, picture: string) {
+    if (isNaN(user_id)) throw notFoundError();
+    const pic = await updatePic(user_id, picture);
+    return pic;
   }
