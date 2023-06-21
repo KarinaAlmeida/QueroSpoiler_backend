@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from 'http-status';
-import { getPostId, postSumService } from "@/services/post-services";
+import { deleteFavorite, getPostId, postFavorite, postSumService } from "@/services/post-services";
 import { AuthenticatedRequest } from "@/middlewares";
 
 
@@ -30,4 +30,28 @@ export async function getPost(req: Request, res: Response, next: NextFunction) {
         next(error);
     }
 
+}
+
+export async function postFave (req: AuthenticatedRequest, res: Response, next: NextFunction) {
+    const {user_id} = req;
+    const postId = Number(req.body.postId);
+    
+    try {
+        const fave= await postFavorite(user_id, postId);
+        return res.sendStatus(httpStatus.OK)
+    } catch (error) {
+        next(error);
+    }
+
+}
+
+export async function deleteFave(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+    const {user_id} = req;
+    const postId = Number(req.body.postId);
+    try {
+        const fave= await deleteFavorite (user_id, postId);
+        return res.sendStatus(httpStatus.OK)
+    } catch (error) {
+        next(error);
+    }
 }

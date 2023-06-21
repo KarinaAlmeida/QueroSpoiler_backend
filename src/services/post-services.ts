@@ -1,6 +1,6 @@
 import { duplicatedSummaryError, notFoundError } from "@/errors";
 import { Summary } from "@/protocols";
-import { findByTitle, getPostById, postSumRepo } from "@/repositories";
+import { deleteFaveSum, findByTitle, getPostById, postFaveSum, postSumRepo } from "@/repositories";
 
 
  
@@ -22,5 +22,19 @@ export async function validateSummary(title: string) {
    const post = await getPostById ({postId});
    if (!post) throw notFoundError();
     return post;
+
+  }
+
+  export async function postFavorite (user_id: number, postId: number) {
+    if (isNaN(user_id) || isNaN(postId)) throw notFoundError();
+    const fave= await postFaveSum (user_id, postId);
+    return fave;
+
+  }
+
+  export async function deleteFavorite (user_id: number, postId: number) {
+    if (isNaN(user_id) || isNaN(postId)) throw notFoundError();
+    const fave= await deleteFaveSum (user_id, postId);
+    return fave;
 
   }

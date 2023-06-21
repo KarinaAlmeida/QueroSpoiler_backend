@@ -3,7 +3,7 @@ import {duplicatedEmailError,invalidCredentialsError, notFoundError } from '@/er
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import {SignUp, SignIn, Summary } from '@/protocols';
-import {deletePostById, findByEmail, findPostById, getPostById, getPostsByUserId, signUp, updatePic } from '@/repositories';
+import {deletePostById, findByEmail, findPostById, getFavesByUserId, getFavoritePosts, getPostById, getPostsByUserId, signUp, updatePic } from '@/repositories';
 
 
 export async function validateEmail(email: string) {
@@ -51,3 +51,15 @@ export async function signup({ name, email, password, picture }:SignUp) {
     const pic = await updatePic(user_id, picture);
     return pic;
   }
+
+  export async function userFaves(user_id: number){
+    const postIdObj = await getFavesByUserId(user_id);
+    const postIds= postIdObj.map((obj)=> obj.postId);
+
+    const posts = await getFavoritePosts(postIds);
+
+
+    if (!posts || posts.length === 0) throw notFoundError();
+    return posts;
+  }
+

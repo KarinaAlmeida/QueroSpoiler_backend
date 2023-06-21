@@ -39,3 +39,25 @@ export async function getPostById ({postId}: any) {
   })
   return posts;
 }
+
+export async function postFaveSum (user_id: number, postId: number) {
+  const fave = await prisma.favorite.create({
+    data: {
+      postId: postId,
+      userId: user_id,
+    },
+  });
+
+  return fave;
+}
+
+export async function deleteFaveSum (user_id: number, postId: number) {
+  const fave = await prisma.favorite.deleteMany({
+    where: {
+      postId: postId,
+      userId: user_id
+    },
+  });
+
+  return fave;
+}

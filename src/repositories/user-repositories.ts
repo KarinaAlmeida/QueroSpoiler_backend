@@ -67,3 +67,40 @@ export async function updatePic (user_id: number, picture: string) {
    }
   })
 }
+
+export async function getFavesByUserId(user_id: number){
+  const posts = await prisma.favorite.findMany({
+    where: {
+      userId: user_id,
+    },
+    select: {
+      postId: true,
+    },
+  });
+  
+  
+  return posts;
+} 
+
+export async function getFavoritePosts(postIds: number[]) {
+  const posts = await prisma.post.findMany({
+    where: {
+      id:{
+        in: postIds
+      },
+    },
+    select: {
+      id: true,
+      title: true,
+      author: true,
+      coverUrl: true,
+      summary: true
+    },
+  });
+  const limitedPosts = posts.map(post => ({
+    ...post,
+    summary: post.summary.length > 200 ? post.summary.substring(0, 200) + '...' : post.summary
+  }));
+  
+  return limitedPosts;
+}

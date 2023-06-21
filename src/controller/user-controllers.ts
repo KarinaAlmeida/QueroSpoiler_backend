@@ -1,4 +1,4 @@
-import {signup, signin, userPost, deletePost, userPic } from '@/services';
+import {signup, signin, userPost, deletePost, userPic, userFaves } from '@/services';
 import httpStatus, { BAD_REQUEST } from 'http-status';
 import { NextFunction, Request, Response } from "express";
 import { AuthenticatedRequest } from '@/middlewares';
@@ -64,4 +64,15 @@ export async function updateUserPic (req: AuthenticatedRequest, res: Response, n
     next(error);
   }
   
+}
+
+export async function getUserFaves(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  try {
+    const { user_id } = req;
+    const posts = await userFaves(user_id);
+    return res.status(httpStatus.OK).send(posts);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 }
