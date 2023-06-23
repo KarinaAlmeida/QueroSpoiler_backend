@@ -2,10 +2,11 @@ import {signup, signin, userPost, deletePost, userPic, userFaves } from '@/servi
 import httpStatus, { BAD_REQUEST } from 'http-status';
 import { NextFunction, Request, Response } from "express";
 import { AuthenticatedRequest } from '@/middlewares';
-import { notFoundError } from '@/errors';
+import { BadRequestError, notFoundError } from '@/errors';
 
 export async function signUp (req: Request, res: Response, next: NextFunction) {
   const { name, email, password, picture } = req.body;
+  if(!name || !email || !password || !picture) throw BadRequestError();
   try {
     await signup({ name, email, password, picture });
     return res.sendStatus(httpStatus.CREATED);

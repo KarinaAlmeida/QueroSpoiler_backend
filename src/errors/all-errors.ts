@@ -49,4 +49,11 @@ export function conflictError(message: string[]) {
       message: "Incorrect email or password",
     };
   }
+
+  export function BadRequestError() {
+    return {
+      name: "BadRequestError",
+      message: "Bad Request",
+    };
+  }
   

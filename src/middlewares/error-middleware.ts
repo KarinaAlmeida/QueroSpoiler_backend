@@ -32,6 +32,10 @@ export function handleApplicationErrors(err: ApplicationError | Error, req: Requ
       return res.status(httpStatus.CONFLICT).send({ message: err.message});
     }
 
+    if (err.name==="BadRequestError") {
+      return res.status(httpStatus.BAD_REQUEST).send({ message: err.message});
+    }
+
     console.error(err);
   
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
