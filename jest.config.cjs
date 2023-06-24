@@ -15,6 +15,6 @@ module.exports = {
     axios: 'axios/dist/node/axios.cjs',
   },
   restoreMocks: true,
-  transformIgnorePatterns: ['/node_modules/'],
+  transformIgnorePatterns: ['/node_modules/'], 
 };
  

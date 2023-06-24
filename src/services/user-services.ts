@@ -16,7 +16,8 @@ export async function signup({ name, email, password, picture }:SignUp) {
     await validateEmail(email)
 
     const hashPassword = await bcrypt.hash(password, 10);
-    await signUp({ name, email, password: hashPassword, picture });
+    const user = await signUp({ name, email, password: hashPassword, picture });
+    return user;
   }
 
 

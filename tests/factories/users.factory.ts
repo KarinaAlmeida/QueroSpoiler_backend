@@ -1,16 +1,17 @@
 import bcrypt from 'bcrypt';
-import faker from '@faker-js/faker';
+import {faker} from '@faker-js/faker';
 import { User } from '@prisma/client';
 import { prisma } from '@/config';
 
-export async function createUser(params: Partial<User> = {}): Promise<User> {
-    const incomingPassword = params.password || faker.faker.internet.password({ length: 6 });  const hashedPassword = await bcrypt.hash(incomingPassword, 10);
+export async function createUser(email?: string, password?: string,name?: string, picture?:string): Promise<User> {
+    const incomingPassword = password || faker.internet.password({ length: 6 });  
+    const hashedPassword = await bcrypt.hash(incomingPassword, 10);
 
     return prisma.user.create({
         data: {
-          name: params.name || faker.faker.person.firstName(),
-          picture: params.picture || faker.faker.internet.url(),
-          email: params.email || faker.faker.internet.email(),
+          name: name || faker.person.firstName(),
+          picture: picture || faker.internet.url(),
+          email: email || faker.internet.email(),
           password: hashedPassword,
         },
       });

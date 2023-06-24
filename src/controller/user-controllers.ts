@@ -2,14 +2,13 @@ import {signup, signin, userPost, deletePost, userPic, userFaves } from '@/servi
 import httpStatus, { BAD_REQUEST } from 'http-status';
 import { NextFunction, Request, Response } from "express";
 import { AuthenticatedRequest } from '@/middlewares';
-import { BadRequestError, notFoundError } from '@/errors';
+import { notFoundError } from '@/errors';
 
 export async function signUp (req: Request, res: Response, next: NextFunction) {
   const { name, email, password, picture } = req.body;
-  if(!name || !email || !password || !picture) throw BadRequestError();
   try {
-    await signup({ name, email, password, picture });
-    return res.sendStatus(httpStatus.CREATED);
+    const user= await signup({ name, email, password, picture });
+    return res.status(httpStatus.CREATED).json({id: user.id, name: user.name, picture: user.picture, email: user.email});;
   } catch (err) {
     next(err);
     }
@@ -19,7 +18,7 @@ export async function signIn(req: Request, res: Response, next: NextFunction) {
   const { email, password } = req.body;
   try {
     const user = await signin({ email, password });
-    return res.send({ user });
+    return res.status(httpStatus.OK).send({user});
 
   } catch (err) {
     next(err);

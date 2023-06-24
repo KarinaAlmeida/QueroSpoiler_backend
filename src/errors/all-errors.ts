@@ -50,10 +50,10 @@ export function conflictError(message: string[]) {
     };
   }
 
-  export function BadRequestError() {
+  export function BadRequestError(message: string[]) {
     return {
       name: "BadRequestError",
-      message: "Bad Request",
+      message,
     };
   }
   
