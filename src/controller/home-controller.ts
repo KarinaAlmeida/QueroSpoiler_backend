@@ -15,5 +15,4 @@ export async function getRecent(req: Request, res: Response, next: NextFunction)
         console.log(error)
         next(error);
     }
-
 }
