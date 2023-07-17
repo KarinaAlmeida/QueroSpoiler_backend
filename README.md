@@ -50,3 +50,5 @@ git clone https://github.com/KarinaAlmeida/projeto_autoral_backend
 
 - Run the project with ```npm run dev```
 
+- To run the tests, use the command ```npm run test```
+
